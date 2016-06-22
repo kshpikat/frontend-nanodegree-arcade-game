@@ -1,3 +1,101 @@
 body {
+    background: #333;
     text-align: center;
+}
+
+@media only screen and (min-width: 800px) {
+    canvas {
+        margin-top: 10px;
+        height: 707px;
+        width: 707px;
+    }
+}
+
+.heading {
+    color: #fff;
+    font-family: 'Cabin Sketch', sans-serif;
+    font-size: 100px;
+    margin-bottom: 0;
+}
+
+.button {
+    border-radius: 20px;
+    display: inline-block;
+    padding: 6px 40px;
+    margin: 65px;
+    background: #68d44f;
+    font-family: 'Cabin Sketch', sans-serif;
+    color: #fff;
+    font-size: 29px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px green;
+    cursor: pointer;
+}
+
+.button:hover {
+    opacity: 0.5;
+    background: orange;
+}
+
+.image-responsive {
+    display: block;
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+.overlay {
+    background: #333;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+}
+
+.overlay > .content {
+    margin: auto;
+}
+
+.start > .content {
+    max-width: 600px;
+    padding: 15% 10%;
+}
+
+.dead {
+    background: red;
+    opacity: 0.5;
+}
+
+.levelup {
+    background: greenyellow;
+    opacity: 0.2;
+}
+
+.content {
+    max-width: 800px;
+    margin-bottom: 0;
+    padding: 12% 10%;
+}
+
+.gameover .final-score {
+    color: #fff;
+    font-family: 'Cabin Sketch', sans-serif;
+    font-size: 20px;
+}
+
+.gameover .final-score span {
+    margin-left: 5px;
+    font-size: 24px;
+}
+
+.content > img {
+    position: absolute;
+    top: 100px;
+    right: 0;
+    left: 0;
+    margin: auto;
 }

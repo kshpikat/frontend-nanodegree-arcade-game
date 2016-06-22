@@ -1,6 +1,44 @@
-frontend-nanodegree-arcade-game
-===============================
+# Classic Arcade Game Clone
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the class or prototype function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+###### Project Overview
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+Project #3 of Udacity's [Front-End Web Developer Nanodegree](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001). 
+The task was to recreate the [classic arcade game](https://www.youtube.com/watch?v=SxeHV1kt7iU&feature=youtu.be) with provided visual assets and a game loop engine by adding a number of entities to the game including, enemies and collectable items.
+
+###### Project Goal
+The game functions correctly and runs error free:
+
+* Player can not move off screen
+* Enemy cross the screen
+* Enemy-vs-player collisions happen logically (not too early or too late)
+* Enemy-vs-player collision resets the game
+* Something happens when player wins
+
+## Getting Started
+
+###### Preview
+
+Point your browser to [GitHub Pages](https://kshpikat.github.io/frontend-nanodegree-arcade-game/) for online preview.
+
+###### Local
+
+###### 1. Get Sources
+
+```
+$ git clone https://github.com/kshpikat/frontend-nanodegree-arcade-game.git
+````
+
+###### 2. Run any kind of HTTP server
+
+For example:
+```
+$ python -m SimpleHTTPServer
+```
+
+
+###### 3. Run the application in the browser
+
+```
+URL: http://localhost:8000
+```
+
