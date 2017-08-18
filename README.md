@@ -14,6 +14,15 @@ The game functions correctly and runs error free:
 * Enemy-vs-player collision resets the game
 * Something happens when player wins
 
+## How to play
+
+1. Use the arrow keys to move the player.
+2. Get to the top to get to the next level.
+3. Collect as many gems as possible to rise your score.
+4. Please avoid bugs to stay alive (if you can).
+5. You have only 3 lives to win the game.
+6. Sorry, there is actually no way to win the game, but still keep trying :)
+
 ## Getting Started
 
 ###### Preview
@@ -28,17 +37,9 @@ Point your browser to [GitHub Pages](https://kshpikat.github.io/frontend-nanodeg
 $ git clone https://github.com/kshpikat/frontend-nanodegree-arcade-game.git
 ````
 
-###### 2. Run any kind of HTTP server
-
-For example:
-```
-$ python -m SimpleHTTPServer
-```
-
-
-###### 3. Run the application in the browser
+###### 2. Open the application in the browser
 
 ```
-URL: http://localhost:8000
+<path_to_app>/index.html
 ```
 

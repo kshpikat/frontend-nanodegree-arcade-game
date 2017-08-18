@@ -52,23 +52,37 @@ var paused = true,
     allEnemies = [],
     allGems = [];
 
+
+/**
+ * Parent Class for all graphic elements like Player, Enemy, Gem
+ */
+function Element(x, y, sprite) {
+    console.log()
+    this.sprite = sprite;
+    this.x = x;
+    this.y = y;
+    this.height = config.ELEMENT_HEIGHT;
+    this.width = config.ELEMENT_WIDTH;
+}
+
+Element.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
 /**
  * Enemy Class constructor
  * @param y Defines which row to put Enemy on
  * @constructor
  */
-var Enemy = function (y) {
-    this.sprite = "images/enemy-bug.png";
-
-    this.height = config.ELEMENT_HEIGHT;
-    this.width = config.ELEMENT_WIDTH;
-
+function Enemy(y) {
     // Set a random x position on the canvas
-    this.x = getRandomInt(-parseInt(this.width * 3), -this.width);
-    this.y = y;
+    var x = getRandomInt(-parseInt(config.ELEMENT_WIDTH * 3), -config.ELEMENT_WIDTH);
+    Element.call(this, x, y, "images/enemy-bug.png");
 
     this.speed = this.getSpeed();
-};
+}
+
+Enemy.prototype = Object.create(Element.prototype);
 
 /**
  * Update the enemy's position, required method for game
@@ -96,13 +110,6 @@ Enemy.prototype.getSpeed = function () {
         speed = getRandomInt(min, max);
     }
     return speed;
-};
-
-/**
- * Draw the enemy on the screen, required method for game
- */
-Enemy.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 /**
@@ -213,17 +220,17 @@ var PlayerControl = (function () {
             }
         }
 
-    }
+    };
 })();
 
 function Player() {
-    this.sprite = "images/char-boy.png";
+    Element.call(this, config.PLAYER_START_X, config.PLAYER_START_Y, "images/char-boy.png");
     this.alive_sprite = "images/char-boy.png";
     this.dead_sprite = "images/char-boy-dead.png";
-    this.height = config.ELEMENT_HEIGHT;
-    this.width = config.ELEMENT_WIDTH;
     this.lives = config.PLAYER_LIVES;
 }
+
+Player.prototype = Object.create(Element.prototype);
 
 Player.prototype.reset = function () {
     this.x = config.PLAYER_START_X;
@@ -236,27 +243,17 @@ Player.prototype.init = function () {
 };
 
 Player.prototype.update = function (dt) {
-    this.real_x = this.x;
-    this.real_y = this.y;
-};
-
-Player.prototype.getLives = function () {
-    return this.lives;
-};
-
-Player.prototype.render = function () {
     if (dead) {
-        this.sprite = this.dead_sprite
+        this.sprite = this.dead_sprite;
     } else {
-        this.sprite = this.alive_sprite
+        this.sprite = this.alive_sprite;
     }
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.makeDead = function () {
     dead = true;
     setTimeout(function () {
-        dead = false
+        dead = false;
     }, 900);
 };
 
@@ -289,7 +286,7 @@ Player.prototype.updateLives = function (type, num) {
 };
 
 Player.prototype.die = function () {
-    if (this.getLives() > 1) {
+    if (this.lives > 1) {
         this.makeDead();
         $("#dead").show().fadeOut();
         this.dropLives(1);
@@ -313,28 +310,28 @@ Player.prototype.handleInput = function (input) {
     var new_y, new_x;
     switch (input) {
         case "up":
-            new_y = this.real_y - config.PLAYER_MOVEMENT_Y;
+            new_y = this.y - config.PLAYER_MOVEMENT_Y;
             if (new_y >= config.BOARD_TOP_BOUNDARY) {
                 this.y = new_y;
             }
             break;
 
         case "down":
-            new_y = this.real_y + config.PLAYER_MOVEMENT_Y;
+            new_y = this.y + config.PLAYER_MOVEMENT_Y;
             if (new_y <= config.BOARD_BOTTOM_BOUNDARY) {
                 this.y = new_y;
             }
             break;
 
         case "left":
-            new_x = this.real_x - config.PLAYER_MOVEMENT_X;
+            new_x = this.x - config.PLAYER_MOVEMENT_X;
             if (new_x >= config.BOARD_LEFT_BOUNDARY) {
                 this.x = new_x;
             }
             break;
 
         case "right":
-            new_x = this.real_x + config.PLAYER_MOVEMENT_X;
+            new_x = this.x + config.PLAYER_MOVEMENT_X;
             if (new_x <= config.BOARD_RIGHT_BOUNDARY) {
                 this.x = new_x;
             }
@@ -344,18 +341,15 @@ Player.prototype.handleInput = function (input) {
 
 var Gem = function (x, y) {
     var gemArray = config.GEMS_ARRAY;
-    this.sprite = "images/" + gemArray[getRandomInt(0, 2)];
-    this.height = config.ELEMENT_HEIGHT;
-    this.width = config.ELEMENT_WIDTH;
-    this.x = x;
-    this.y = y;
+    Element.call(this, x, y, "images/" + gemArray[getRandomInt(0, 2)]);
 };
-Gem.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+
+Gem.prototype = Object.create(Element.prototype);
+
 Gem.prototype.clear = function () {
     this.x = -100;
 };
+
 Gem.prototype.reset = function () {
     gem = new Gem();
 };
@@ -428,7 +422,7 @@ var LevelControl = (function () {
         endGame: function () {
             this.getLevel().endGame();
         }
-    }
+    };
 })();
 
 
@@ -489,7 +483,7 @@ var StatsControl = (function () {
         render: function () {
             this.getStats().render();
         }
-    }
+    };
 })();
 
 
@@ -533,7 +527,7 @@ Stats.prototype.getScore = function () {
 };
 
 Stats.prototype.showScore = function () {
-    this.drawString(this.getScore(), 700, 82, "end")
+    this.drawString(this.getScore(), 700, 82, "end");
 };
 
 Stats.prototype.addScore = function (num) {
@@ -541,7 +535,7 @@ Stats.prototype.addScore = function (num) {
 };
 
 Stats.prototype.showLives = function () {
-    var lives = PlayerControl.getPlayer().getLives();
+    var lives = PlayerControl.getPlayer().lives;
     this.drawString("x " + lives, config.STATS_LIVES_X, config.STATS_LIVES_Y, "start");
     ctx.drawImage(Resources.get("images/stat-heart.png"), 430, 62);
 };
@@ -585,7 +579,7 @@ var App = (function (global) {
 
         // Click handler for "Play Again" button
         $("#play-again").click(function () {
-            $("#gameover").hide()
+            $("#gameover").hide();
             paused = false;
         });
 
@@ -657,8 +651,12 @@ var App = (function (global) {
         },
 
         /**
-         * Update all components for App
-         * @param dt
+         * This is called by the update function and loops through all of the
+         * objects within your allEnemies array as defined in app.js and calls
+         * their update() methods. It will then call the update function for your
+         * player object. These update methods should focus purely on updating
+         * the data/properties related to the object. Do your drawing in your
+         * render methods.
          */
         updateEntities: function (dt) {
             Enemies.update(dt);
@@ -679,7 +677,7 @@ var App = (function (global) {
             Gems.checkCollisions();
             PlayerControl.checkCollisions();
         }
-    }
+    };
 
 })(this);
 
